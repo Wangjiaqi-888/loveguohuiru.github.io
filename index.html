@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>给郭荟茹的专属问答</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff99cc 0%, #ffcccc 100%);
+            font-family: 'Microsoft YaHei', cursive;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ff3366;
+            font-size: 3.5em;
+            margin: 30px 0;
+            text-shadow: 0 0 15px rgba(255,51,102,0.5);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 25px 60px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #yesBtn {
+            background: linear-gradient(45deg, #ff66b3, #ff9999);
+            color: white;
+        }
+
+        #noBtn {
+            background: linear-gradient(45deg, #ff9999, #ff66b3);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.4),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        button:hover::after {
+            left: 100%;
+        }
+
+        #message {
+            color: #ff3366;
+            font-size: 1.5em;
+            margin-top: 30px;
+            min-height: 40px;
+            text-shadow: 0 0 10px rgba(255,51,102,0.3);
+        }
+
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(45deg, #ff99cc, #ffffff);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            animation: fall linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 5px #ff3366); }
+            50% { filter: drop-shadow(0 0 20px #ff3366); }
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* 手机端适配 */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2em !important;
+                margin: 15px 0 !important;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 20px;
+                margin-top: 30px;
+            }
+            
+            button {
+                padding: 20px 50px !important;
+                font-size: 1.3em !important;
+                border-radius: 40px;
+            }
+            
+            #message {
+                font-size: 1.2em !important;
+                margin-top: 20px;
+            }
+            
+            .petal {
+                width: 12px;
+                height: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="petals"></div>
+
+    <div class="container">
+        <h1>💖 亲爱的郭荟茹 💖</h1>
+        <h2 style="color:#ff6699;font-size:2.2em">🎀 最近有没有偷偷想我呀？🎀</h2>
+        <div class="buttons">
+            <button id="yesBtn" onclick="showLove()">每分每秒都在想～</button>
+            <button id="noBtn" onclick="playHardToGet()">才...才没有呢</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        // 花瓣特效
+        function createPetals() {
+            setInterval(() => {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDuration = Math.random() * 3 + 5 + 's';
+                petal.style.opacity = Math.random() * 0.7 + 0.3;
+                document.getElementById('petals').appendChild(petal);
+
+                setTimeout(() => petal.remove(), 8000);
+            }, 300);
+        }
+        createPetals();
+
+        let noClickCount = 0;
+        const messages = [
+            "🌸 晚风捎来的思念都吹到你那里了～",
+            "💫 星星说昨晚梦到你了呢",
+            "🍬 我口袋里的糖糖都不甜了...",
+            "🌙 月亮不睡我不睡，等你一句「在想」～",
+            "🦋 你眨眨眼我的蝴蝶就飞到你心里啦",
+            "🎐 风铃响了${noClickCount}下了，真的不想嘛",
+            "💌 给你的情书正在派送中...",
+            "🎆 最后通牒！再不说想就挠痒痒！"
+        ];
+
+        function showLove() {
+            document.body.innerHTML = `
+                <style>
+                    .firework {
+                        position: absolute;
+                        width: 10px;
+                        height: 10px;
+                        background: #ff3366;
+                        border-radius: 50%;
+                        animation: explode 1s forwards;
+                    }
+                    @keyframes explode {
+                        0% { transform: scale(1); opacity: 1; }
+                        100% { transform: scale(15); opacity: 0; }
+                    }
+                </style>
+                <h1 style="color:#ff3366;font-size:4em;margin-top:20vh">💞 ${getSweetTitle()} 💞</h1>
+                <p style="font-size:2em;color:#ff6699">我也超级超级想你！</p >
+                <p style="font-size:1.2em;color:#ff99cc">（要一直一直在一起哦～）</p >
+            `;
+            
+            // 爱心烟花
+            for(let i=0; i<50; i++){
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = Math.random()*100 + 'vw';
+                firework.style.top = Math.random()*100 + 'vh';
+                firework.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
+                firework.style.animationDelay = Math.random()*0.5 + 's';
+                document.body.appendChild(firework);
+            }
+        }
+
+        function playHardToGet() {
+            noClickCount++;
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            
+            noBtn.style.transform = `scale(${Math.max(0.3, 1 - noClickCount*0.15)}) rotate(${noClickCount*10}deg)`;
+            yesBtn.style.transform = `scale(${1 + noClickCount*0.2})`;
+            yesBtn.style.background = `linear-gradient(45deg, #ff${99 - noClickCount*5}99, #ff66b3)`;
+
+            const msg = messages[Math.min(noClickCount-1, messages.length-1)]
+                         .replace('${noClickCount}', noClickCount);
+            document.getElementById('message').innerHTML = `
+                <span style="animation: fadeIn 0.5s">${msg}</span>
+            `;
+
+            if(noClickCount >= messages.length) {
+                yesBtn.style.transform = 'scale(2.5)';
+                yesBtn.innerHTML = "💘 超～级～想～你 💘";
+                noBtn.style.display = 'none';
+                document.getElementById('message').innerHTML = 
+                    "🎉 检测到心动值爆表！快点击粉色按钮～";
+            }
+        }
+
+        function getSweetTitle() {
+            const titles = ["我的小玫瑰", "心动嘉宾", "专属宝贝", "宇宙第一可爱"];
+            return titles[Math.floor(Math.random()*titles.length)];
+        }
+    </script>
+</body>
+</html>
